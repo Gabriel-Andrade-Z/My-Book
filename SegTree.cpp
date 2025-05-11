@@ -1,6 +1,6 @@
 // Segment Tree 
 // Complexity: build <O(n log n),O(n)>, query O(n log n)
-// by: Gabeee
+// by: Gabeee, thanks: Jao
 
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
