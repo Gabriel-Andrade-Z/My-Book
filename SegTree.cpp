@@ -1,6 +1,6 @@
 // Segment Tree 
-// Complexity: <O(n log n),O(n)>
-// Build: O(n log n), Query: O(log n)
+// Complexity: <O(n⋅log(n)),O(n)>
+// Build: O(n⋅log(n)), Query: O(log(n))
 // by: Gabeee, thanks: Jao
 
 #include <bits/stdc++.h>
