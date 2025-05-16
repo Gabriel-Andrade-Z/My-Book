@@ -1,5 +1,5 @@
 // Bitmask Subset Enumeration
-// Complexity: <O(2ⁿn),O(1)>
+// Complexity: <O(2ⁿ⋅n),O(1)>
 // by: Gabeee
 
 #include <bits/stdc++.h>
