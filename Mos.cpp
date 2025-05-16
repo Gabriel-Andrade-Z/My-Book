@@ -1,5 +1,5 @@
 // Mo's Algorithm (base application)
-// Complexity: <O(n√n),O(n)>
+// Complexity: <O(n⋅√n),O(n)>
 // by: Gabeee
 
 #include <bits/stdc++.h>
