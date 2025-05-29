@@ -81,8 +81,8 @@ void solve() {
 		cap[u][v] += c;
 		graph[u].eb(v); graph[v].eb(u);
 	}
-	int max_flow = edmonds_karp();
-	cout << max_flow << '\n';
+	int flow = edmonds_karp();
+	cout << flow << '\n';
 }
 
 signed main() {
