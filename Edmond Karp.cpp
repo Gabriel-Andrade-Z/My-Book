@@ -78,7 +78,7 @@ void solve() {
 	f (i,1,MAXN) graph[i].clear();
 	f (i,0,m) {
 		int u, v, c; cin >> u >> v >> c;
-		cap[u][v] += c; cap[v][u] += c;
+		cap[u][v] += c;
 		graph[u].eb(v); graph[v].eb(u);
 	}
 	int max_flow = edmonds_karp();
