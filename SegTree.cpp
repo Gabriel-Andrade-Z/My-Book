@@ -37,11 +37,12 @@ int arr[MAXN];
 
 struct Node {
 	int x;
+	Node(int val = 0) : x(val) {}
 	Node operator+(const Node b) const { return {x + b.x}; }
 };
 
 struct SEG {
-	Node seg[4*MAXN] = {0};	
+	Node seg[4*MAXN];	
 	void build(int u, int l, int r) {
 		if (l == r) { seg[u] = {arr[l]}; return; }
 		int m = (r + l) >> 1ll;
