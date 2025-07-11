@@ -33,7 +33,7 @@ bool all_test = 0;
  
 const int MAXN = 2e5 + 10, inf = LLONG_MAX;
 
-int arr[MAXN], calls = 0;
+int arr[MAXN];
  
 struct Node {
 	int x;
@@ -57,7 +57,6 @@ struct SEG {
 	}
 	
 	void build(int u, int l, int r) {
-		++calls;
 		if (l == r) { seg[u] = {arr[l]}; return; }
 		int m = (r + l) >> 1ll;
 		build(2*u,l,m), build(2*u+1,m+1,r);
