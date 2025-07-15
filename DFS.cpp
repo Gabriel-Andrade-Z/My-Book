@@ -44,7 +44,7 @@ void dfs(int u) {
 void solve() {
 	cin >> n >> m;
 	vis = vector<bool>(n + 1,0);
-		graph = vector<vector<int>>(n + 1);
+	graph = vector<vector<int>>(n + 1);
 	f (i,0,m) {
 		int u, v; cin >> u >> v;
 		graph[u].eb(v); graph[v].eb(u);
