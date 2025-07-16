@@ -1,4 +1,4 @@
-// n choose k C(n,k) with dp
+// C(n,k) with dp
 // Complexity: <O(n²),O(1)>
 // Precompute: O(n²), Query: O(1)
 // by: Gabeee
