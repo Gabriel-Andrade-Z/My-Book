@@ -88,7 +88,7 @@ void solve() {
 signed main() {
 	ios::sync_with_stdio(0);
 	cin.tie(nullptr);
-	int t = 1; if (all_test) cin >> t;
+	int tt = 1; if (all_test) cin >> tt;
 	while (t--) solve();
 	return 0;
 }
