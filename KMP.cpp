@@ -1,5 +1,5 @@
 // Knuth-Morris-Pratt (KMP) String Matching
-// Complexity: O(n + m)
+// Complexity: <O(n + m),O(m)>
 // by: Gabeee
 
 #include <bits/stdc++.h>
