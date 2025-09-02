@@ -30,45 +30,30 @@ using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statisti
 
 bool all_test = 0;
 
-void construct_lps(string &pat, vector<int> &lps) {
-        int len = 0, i = 1; lps[0] = 0;
-        while (i < sz(pat)) {
-                if (pat[i] == pat[len]) {
-                        len++;
-                        lps[i] = len;
-                        i++;
-                } else {
-                        if (len != 0) len = lps[len - 1];
-                        else {
-                                lps[i] = 0;
-                                i++;
-                        }
-                }
-        }
+void construct_lps(string pat, vector<int> &lps) {
+        int j = 0, m = sz(lps); lps[0] = 0;
+        f (i,1,m) {
+		while (j > 0 && pat[j] != pat[i]) j = lps[j - 1];
+		if (pat[j] == pat[i]) ++j;
+		lps[i] = j;
+	}
 }
 
 vector<int> kmp(string &pat, string &txt) {
-        int n = sz(txt), m = sz(pat);
+        int j = 0, n = sz(txt), m = sz(pat);
         vector<int> lps(m), res;
-        construct_lps(pat, lps);
-        int i = 0, j = 0;
-        while (i < n) {
-                if (txt[i] == pat[j]) {
-                        i++; j++;
-                        if (j == m) {
-                                res.pb(i - j);
-                                j = lps[j - 1];
-                        }
-                } else {
-                        if (j != 0) j = lps[j - 1];
-                        else i++;
-                }
-        }
+        construct_lps(pat + '$', lps);
+	f (i,0,n) {
+		while (j > 0 && pat[j] != txt[i]) j = lps[j - 1];
+		if (pat[j] == txt[i]) ++j;
+		if (j == m) res.pb(i - j + 1);
+	}
         return res;
 }
 
 void solve() {
-        string txt, pat; cin >> txt >> pat;
+        string txt, pat;
+        cin >> pat >> txt;
         vector<int> res = kmp(pat, txt);
         fa(x,res) cout << x << ' '; cout << '\n';
 }
