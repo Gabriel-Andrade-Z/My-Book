@@ -1,6 +1,6 @@
 // KMP with Automato
 // Complexity: <O(n + Σ⋅m),O(Σ⋅m)>
-// Build: O(Σ⋅m)
+// Build: O(Σ⋅m), Query: O(1)
 // by: Gabeee, thanks: bruno
 
 #include <bits/stdc++.h>
