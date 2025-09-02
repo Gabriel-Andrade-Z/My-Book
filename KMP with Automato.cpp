@@ -56,7 +56,7 @@ struct autKMP {
 };
 
 vector<int> kmp(string &pat, string &txt) {
-        int at = 0, n = sz(txt), m = sz(pat);
+	int at = 0, n = sz(txt), m = sz(pat);
 	auto aut = autKMP(pat);
         vector<int> res;
 	f (i,0,n) {
