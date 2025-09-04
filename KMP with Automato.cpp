@@ -42,7 +42,6 @@ void construct_lps(string pat, vector<int> &lps) {
 
 struct autKMP {
 	vector<vector<int>> nxt;
-
 	autKMP(string &pat) : nxt(26,vector<int>(sz(pat) + 1)) {
 		int m = sz(pat);
 		vector<int> lps(m + 1); construct_lps(pat + '$',lps);
@@ -67,8 +66,7 @@ vector<int> kmp(string &pat, string &txt) {
 }
 
 void solve() {
-        string txt, pat;
-        cin >> pat >> txt;
+        string txt, pat; cin >> pat >> txt;
         vector<int> res = kmp(pat, txt);
         fa(x,res) cout << x << ' '; cout << '\n';
 }
