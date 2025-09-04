@@ -52,8 +52,7 @@ vector<int> kmp(string &pat, string &txt) {
 }
 
 void solve() {
-        string txt, pat;
-        cin >> pat >> txt;
+        string txt, pat; cin >> pat >> txt;
         vector<int> res = kmp(pat, txt);
         fa(x,res) cout << x << ' '; cout << '\n';
 }
