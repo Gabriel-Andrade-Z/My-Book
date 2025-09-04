@@ -57,7 +57,7 @@ struct autKMP {
 vector<int> kmp(string &pat, string &txt) {
 	int at = 0, n = sz(txt), m = sz(pat);
 	auto aut = autKMP(pat);
-        vector<int> res;
+    	vector<int> res;
 	f (i,0,n) {
 		at = aut.nxt[txt[i] - 'a'][at];
 		if (at == m) res.pb(i - at + 1);
