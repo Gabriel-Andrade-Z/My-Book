@@ -20,7 +20,6 @@
 #define fi first
 #define se second
 #define mkp make_pair
-
 #define debug(x) cerr << #x << " = " << (x) << endl;
 
 using namespace std;
@@ -31,44 +30,52 @@ using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statisti
 
 bool all_test = 0;
 
-void construct_lps(string pat, vector<int> &lps) {
-        int j = 0, m = sz(lps); lps[0] = 0;
-        f (i,1,m) {
-		while (j > 0 && pat[j] != pat[i]) j = lps[j - 1];
-		if (pat[j] == pat[i]) ++j;
-		lps[i] = j;
-	}
+void construct_lps(const string &pat, vector<int> &lps) {
+        int m = (int)pat.size();
+        lps.assign(m,0);
+        for (int i = 1, j = 0;i < m;++i) {
+                while (j > 0 && pat[j] != pat[i]) j = lps[j - 1];
+                if (pat[j] == pat[i]) ++j;
+                lps[i] = j;
+        }
 }
 
 struct autKMP {
-	vector<vector<int>> nxt;
-	autKMP(string &pat) : nxt(26,vector<int>(sz(pat) + 1)) {
-		int m = sz(pat);
-		vector<int> lps(m + 1); construct_lps(pat + '$',lps);
-		nxt[pat[0] - 'a'][0] = 1;
-		f (ch,0,26) {
-			f (i,1,m + 1) {
-				nxt[ch][i] = ch == pat[i] - 'a' ? i + 1 : nxt[ch][lps[i - 1]];	
-			}
-		}
-	}
+        vector<vector<int>> nxt;
+        vector<int> lps;
+        autKMP(const string &pat) : nxt(26,vector<int>(sz(pat) + 1,0)) {
+                int m = sz(pat);
+                construct_lps(pat,lps);
+                for (int i = 0;i <= m;++i) {
+                        for (int ch = 0;ch < 26;++ch) {
+                                int j = i;
+                                while (j > 0 && (j == m || pat[j] != char('a' + ch))) j = lps[j - 1];
+                                if (j < m && pat[j] == char('a' + ch)) ++j;
+                                nxt[ch][i] = j;
+                        }
+                }
+        }
 };
 
-vector<int> kmp(string &pat, string &txt) {
-	int at = 0, n = sz(txt), m = sz(pat);
-	auto aut = autKMP(pat);
-    	vector<int> res;
-	f (i,0,n) {
-		at = aut.nxt[txt[i] - 'a'][at];
-		if (at == m) res.pb(i - at + 1);
-	}
+vector<int> kmp(const string &pat, const string &txt) {
+        autKMP aut(pat);
+        int n = sz(txt), m = sz(pat), at = 0;
+        vector<int> res;
+        for (int i = 0;i < n;++i) {
+                at = aut.nxt[txt[i] - 'a'][at];
+                if (at == m) {
+                        res.pb(i - m + 1);
+                        at = (m ? aut.lps[m - 1] : 0);
+                }
+        }
         return res;
 }
 
 void solve() {
-        string txt, pat; cin >> pat >> txt;
+        string pat, txt; cin >> pat >> txt;
         vector<int> res = kmp(pat, txt);
-        fa(x,res) cout << x << ' '; cout << '\n';
+        fa(x,res) cout << x << ' ';
+        cout << '\n';
 }
 
 signed main() {
