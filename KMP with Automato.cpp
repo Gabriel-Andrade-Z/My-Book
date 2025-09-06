@@ -29,30 +29,28 @@ template <typename T>
 using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 bool all_test = 0;
-
-void construct_lps(const string &pat, vector<int> &lps) {
-        int m = (int)pat.size();
-        lps.assign(m,0);
-        for (int i = 1, j = 0;i < m;++i) {
-                while (j > 0 && pat[j] != pat[i]) j = lps[j - 1];
-                if (pat[j] == pat[i]) ++j;
-                lps[i] = j;
-        }
+ 
+void construct_lps(string pat, vector<int> &lps) {
+        int j = 0, m = sz(lps); lps[0] = 0;
+        f (i,1,m) {
+		while (j > 0 && pat[j] != pat[i]) j = lps[j - 1];
+		if (pat[j] == pat[i]) ++j;
+		lps[i] = j;
+	}
 }
-
-struct AutKMP {
-        vector<vector<int>> nxt; 
-        vector<int> lps;
-        int m, sigma;
-        AutKMP(const string &pat) : nxt(26,vector<int>(sz(pat) + 1,0)) {
-                int m = sz(pat);
-                construct_lps(pat, lps);
-                f(ch,0,sigma) nxt[0][ch] = (pat[0] - 'a' == ch ? 1 : 0);
-                for (int i = 1; i <= m; ++i) {
-                        f(ch,0,sigma) nxt[i][ch] = nxt[lps[i - 1]][ch];
-                        if (i < m) nxt[i][pat[i] - 'a'] = i + 1;
-                }
-        }
+ 
+struct autKMP {
+	vector<vector<int>> nxt;
+	autKMP(string &pat) : nxt(26,vector<int>(sz(pat) + 1)) {
+		int m = sz(pat);
+		vector<int> lps(m + 1); construct_lps(pat + '$',lps);
+		nxt[pat[0] - 'a'][0] = 1;
+		f (ch,0,26) {
+			f (i,1,m + 1) {
+				nxt[ch][i] = ch == pat[i] - 'a' ? i + 1 : nxt[ch][lps[i - 1]];	
+			}
+		}
+	}
 };
 
 // permite quadrático...
