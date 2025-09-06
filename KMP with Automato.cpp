@@ -40,6 +40,23 @@ void construct_lps(const string &pat, vector<int> &lps) {
         }
 }
 
+struct AutKMP {
+        vector<vector<int>> nxt; 
+        vector<int> lps;
+        int m, sigma;
+        AutKMP(const string &pat) : nxt(26,vector<int>(sz(pat) + 1,0)) {
+                int m = sz(pat);
+                construct_lps(pat, lps);
+                f(ch,0,sigma) nxt[0][ch] = (pat[0] - 'a' == ch ? 1 : 0);
+                for (int i = 1; i <= m; ++i) {
+                        f(ch,0,sigma) nxt[i][ch] = nxt[lps[i - 1]][ch];
+                        if (i < m) nxt[i][pat[i] - 'a'] = i + 1;
+                }
+        }
+};
+
+// permite quadrático...
+/*
 struct autKMP {
         vector<vector<int>> nxt;
         vector<int> lps;
@@ -56,6 +73,7 @@ struct autKMP {
                 }
         }
 };
+*/
 
 vector<int> kmp(const string &pat, const string &txt) {
         autKMP aut(pat);
