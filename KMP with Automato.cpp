@@ -40,38 +40,20 @@ void construct_lps(string pat, vector<int> &lps) {
 }
  
 struct autKMP {
-	vector<vector<int>> nxt;
-	autKMP(string &pat) : nxt(26,vector<int>(sz(pat) + 1)) {
-		int m = sz(pat);
-		vector<int> lps(m + 1); construct_lps(pat + '$',lps);
-		nxt[pat[0] - 'a'][0] = 1;
-		f (ch,0,26) {
-			f (i,1,m + 1) {
-				nxt[ch][i] = ch == pat[i] - 'a' ? i + 1 : nxt[ch][lps[i - 1]];	
-			}
-		}
-	}
-};
-
-// permite quadrático...
-/*
-struct autKMP {
         vector<vector<int>> nxt;
         vector<int> lps;
-        autKMP(const string &pat) : nxt(26,vector<int>(sz(pat) + 1,0)) {
+        autKMP(const string &pat) : nxt(26, vector<int>(sz(pat) + 1, 0)) {
                 int m = sz(pat);
-                construct_lps(pat,lps);
-                for (int i = 0;i <= m;++i) {
-                        for (int ch = 0;ch < 26;++ch) {
-                                int j = i;
-                                while (j > 0 && (j == m || pat[j] != char('a' + ch))) j = lps[j - 1];
-                                if (j < m && pat[j] == char('a' + ch)) ++j;
-                                nxt[ch][i] = j;
+                construct_lps(pat, lps); 
+                if (m > 0) nxt[pat[0] - 'a'][0] = 1;
+                f (i,1,m + 1) {
+                        f (ch,0,26) {
+                                if (i < m && ch == pat[i] - 'a') nxt[ch][i] = i + 1;
+                                else nxt[ch][i] = nxt[ch][ (i == 0 ? 0 : lps[i - 1]) ];
                         }
                 }
         }
 };
-*/
 
 vector<int> kmp(const string &pat, const string &txt) {
         autKMP aut(pat);
