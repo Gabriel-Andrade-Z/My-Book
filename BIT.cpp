@@ -34,59 +34,52 @@ bool all_test = 0;
 
 const int MAXN = 2e5 + 1, MOD = 1e9 + 7, MODW = 998244353, oo = 1ll << 60;
 
-struct BIT {
-	int n;
-	vector<int> bit;
-
-	BIT(int _n=0) { init(_n); }
-
-	void init(int _n) {
-		n = _n;
-		bit.assign(n + 1, 0);
-	}
-
-	void update(int i, int v) {
-		while (i <= n) { bit[i] += v; i += i & -i;
-		}
-	}
-
-	int query(int i) {
-		int s = 0;
-		while (i > 0) { s += bit[i]; i -= i & -i; }
-		return s;
-	}
-
-	int query(int l, int r) { return query(r) - query(l - 1); }
-
-	int upper_bound(int x) {
-		int p = 0;
-		rf (i, __lg(n), 0)
-			if (p + (1 << i) <= n && bit[p + (1 << i)] <= x) 
-				x -= bit[p += (1 << i)];
-		return p;
-	}
-};
-
 int arr[MAXN];
+ 
+struct Node {
+    int x;
+    Node(int val = 0) : x(val) {} 
+ 
+    Node operator+(const Node b) const { return {x + b.x}; }
+    Node operator-(const Node b) const { return {x - b.x}; }
+};
+ 
+struct BIT {
+    int n; vector<Node> bit;
+    BIT(int _n = 0) { init(_n); }
 
+    void init(int _n) {
+        n = _n;
+        bit.assign(n + 1, Node()); 
+    }
+ 
+    void update(int i, Node v) {
+        while (i <= n) { bit[i] = bit[i] + v; i += i & -i; }
+    }
+ 
+    Node query(int i) {
+        Node s = Node(); 
+        while (i > 0) { 
+            s = s + bit[i]; 
+            i -= i & -i; 
+        }
+        return s;
+    }
+    Node query(int l, int r) { return query(r) - query(l - 1); }
+};
+ 
 void solve() {
-	int n, q; cin >> n >> q;
-
-	f(i,1,n + 1) cin >> arr[i];
-
-	BIT bit(n);
-	f(i,1,n + 1) bit.update(i, arr[i]);
-
-	while (q--) {
-		int t; cin >> t;
-		if (t == 1) {
-			int i, v; cin >> i >> v;
-			bit.update(i, v);
-		} else {
-			int l, r; cin >> l >> r;
-			cout << bit.query(l, r) << '\n';
-		}
-	}
+    int n, q; cin >> n >> q;
+    f (i,1,n + 1) cin >> arr[i];
+    BIT bit(n);
+    f (i,1,n + 1) bit.update(i,Node(arr[i]));
+    while (q--) {
+        int op, l, r; cin >> op >> l >> r;
+        if (op == 1) {
+            bit.update(l,Node(r - arr[l]));
+            arr[l] = r; // sempre lembrar (BIT SOMA) (se for fzr update, lembra de mudar).
+        } else cout << bit.query(l,r).x << '\n';
+    }
 }
 
 signed main() {
