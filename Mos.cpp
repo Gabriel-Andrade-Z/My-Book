@@ -32,7 +32,7 @@ bool all_test = 0;
 
 const int MAXN = 1e5 + 10;
 
-int n, q, k, block, cnt = 0;
+int n, q, block, cnt = 0;
 int arr[MAXN], freq[MAXN], ans[MAXN]; // ai ≤ 10⁵
 
 struct Query {
@@ -45,18 +45,18 @@ struct Query {
 
 void add(int i) {
 	int x = arr[i];
-	if (x < k && freq[x] == 0) ++cnt;
+	if (freq[x] == 0) ++cnt;
 	++freq[x];
 }
 
 void rem(int i) {
 	int x = arr[i];
 	--freq[x];
-	if (x < k && freq[x] == 0) --cnt;
+	if (freq[x] == 0) --cnt;
 }
 
 void solve() {
-	cin >> n >> q >> k;
+	cin >> n >> q;
 	f (i,0,n) cin >> arr[i];
 	block = floor(sqrt(n));
 	vector<Query> qrys;
