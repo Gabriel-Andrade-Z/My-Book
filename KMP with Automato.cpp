@@ -30,29 +30,31 @@ using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statisti
 
 bool all_test = 0;
  
-void construct_lps(string pat, vector<int> &lps) {
-        int j = 0, m = sz(lps); lps[0] = 0;
-        f (i,1,m) {
+void construct_lps(const string &pat, vector<int> &lps) {
+	int j = 0, m = pat.size();
+	lps.resize(m);
+	lps[0] = 0;
+	for (int i = 1; i < m; ++i) {
 		while (j > 0 && pat[j] != pat[i]) j = lps[j - 1];
 		if (pat[j] == pat[i]) ++j;
 		lps[i] = j;
 	}
 }
- 
+
 struct autKMP {
-        vector<vector<int>> nxt;
-        vector<int> lps;
-        autKMP(const string &pat) : nxt(26, vector<int>(sz(pat) + 1, 0)) {
-                int m = sz(pat);
-                construct_lps(pat, lps); 
-                if (m > 0) nxt[pat[0] - 'a'][0] = 1;
-                f (i,1,m + 1) {
-                        f (ch,0,26) {
-                                if (i < m && ch == pat[i] - 'a') nxt[ch][i] = i + 1;
-                                else nxt[ch][i] = nxt[ch][ (i == 0 ? 0 : lps[i - 1]) ];
-                        }
-                }
-        }
+	vector<vector<int>> nxt;
+	vector<int> lps;
+	autKMP(const string &pat) : nxt(26, vector<int>(pat.size() + 1, 0)) {
+		int m = pat.size();
+		construct_lps(pat, lps);
+		if (m > 0) nxt[pat[0] - 'a'][0] = 1;
+		for (int i = 1; i <= m; ++i) {
+			for (int ch = 0; ch < 26; ++ch) {
+				if (i < m && ch == pat[i] - 'a') nxt[ch][i] = i + 1;
+				else nxt[ch][i] = nxt[ch][i == 0 ? 0 : lps[i - 1]];
+			}
+		}
+	}
 };
 
 vector<int> kmp(const string &pat, const string &txt) {
