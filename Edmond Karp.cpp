@@ -57,42 +57,32 @@ struct EdmondsKarp {
         int max_flow(int s, int t) {
                 int flow = 0;
                 vector<pair<int, int>> p(n + 1); // Guarda {nó pai, índice da aresta no pai}
-        
                 while (true) {
                         fill(all(p), make_pair(-1, -1));
                         queue<pair<int, int>> q;
                         q.push({s, oo});
                         p[s] = {-2, -2};
-            
                         int pushed = 0;
                         while (!q.empty() && !pushed) {
                                 auto [u, f] = q.front(); q.pop();
-                                
                                 f(i, 0, sz(adj[u])) {
-                                auto& e = adj[u][i];
-                                // Se o nó não foi visitado e a aresta tem capacidade residual
-                                if (p[e.to].fi == -1 && e.cap > 0) {
-                                        p[e.to] = {u, i};
-                                        int new_f = min(f, e.cap);
-                                        
-                                        if (e.to == t) { 
-                                        pushed = new_f; 
-                                        break; 
-                                        }
-                                        q.push({e.to, new_f});
-                                }
+                                	auto& e = adj[u][i];
+                                	// Se o nó não foi visitado e a aresta tem capacidade residual
+                                	if (p[e.to].fi == -1 && e.cap > 0) {
+	                                        p[e.to] = {u, i};
+        	                                int new_f = min(f, e.cap);
+                                        	if (e.to == t) { pushed = new_f; break; }
+                                        	q.push({e.to, new_f});
+                                	}
                                 }
                         }
-                        
                         // Se não encontramos mais nenhum caminho aumentante, acabou o fluxo
                         if (!pushed) break;
                         flow += pushed;
-                        
                         // Backtracking: atualiza as capacidades ao longo do caminho encontrado
                         for (int v = t; v != s; v = p[v].fi) {
                                 int u = p[v].fi, idx = p[v].se;
                                 int rev_idx = adj[u][idx].rev;
-                                
                                 adj[u][idx].cap -= pushed;         // Aresta de ida perde capacidade
                                 adj[v][rev_idx].cap += pushed;     // Aresta de volta (reversa) ganha capacidade
                         }
@@ -105,9 +95,9 @@ void solve() {
 }
 
 signed main() {
-		ios::sync_with_stdio(0);
-		cin.tie(nullptr);
-		int tt = 1; if (all_test) cin >> tt;
-		while (t--) solve();
-		return 0;
+	ios::sync_with_stdio(0);
+	cin.tie(nullptr);
+	int tt = 1; if (all_test) cin >> tt;
+	while (t--) solve();
+	return 0;
 }
