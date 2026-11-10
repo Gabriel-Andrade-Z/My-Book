@@ -1,36 +1,40 @@
-// Edmond Karp (Flow)
-// Complexity: <O(V⋅E²),O(V²)>
-// by: Gabeee
-
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 
 #define int long long
+#define ld long double
 #define pb push_back
 #define eb emplace_back
 #define is insert
 #define all(x) (x).begin(), (x).end()
 #define rall(x) (x).rbegin(), (x).rend()
-#define f(i,b,e) for (int i = (b);i < (e);++i)
-#define rf(i,b,e) for (int i = (b);i >= (e);--i)
-#define fa(i,a) for (auto i : (a))
-#define sz(x) ((int)(x).size())
+#define unique(x) (x).erase(unique((x).begin(), (x).end()), (x).end())
+#define f(i,b,e) for (int i = (b); i < (e); ++i)
+#define rf(i,b,e) for (int i = (b); i >= (e); --i)
+#define fa(i,a) for (auto& i : (a))
+#define sz(x) (int)(x).size()
 #define fi first
 #define se second
 #define mkp make_pair
 
-#define debug(x) cerr << #x << " = " << (x) << endl;
-
 using namespace std;
-using namespace __gnu_pbds;
 
-template <typename T>
-using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+using par = array<int,2>;
+using ii = pair<int,int>;
+using iii = array<int,3>;
+
+typedef vector<int> vi;
+typedef vector<ii> vii;
+typedef vector<vector<int>> vvi;
+typedef set<int> si;
+typedef map<int,int> mii;
 
 bool all_test = 0;
 
-const int inf = LLONG_MAX, MAXN = 101;
+const int MAXN = 1e5 + 10, MOD = 1e9 + 7, MODW = 998244353, oo = 1ll << 60;
+
+const ld pi = acos(-1.0);
 
 struct EdmondsKarp {
         struct Edge { 
